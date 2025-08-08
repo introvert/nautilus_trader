@@ -14,6 +14,21 @@
 #  limitations under the License.
 # -------------------------------------------------------------------------------------------------
 
+"""Minimal example showing how to execute a backtest.
+
+The script wires together configuration objects, points to the bundled
+sample trade data under ``tests/test_data/binance`` and then launches the
+``BacktestNode``.  Run it from the project root with::
+
+    python examples/backtest/run_backtest.py
+
+The test dataset ships with the repository so no additional download is
+required.  Replace the paths or configuration to suit your own data and
+strategies.
+"""
+
+from pathlib import Path
+
 from nautilus_trader.backtest.config import (
     BacktestDataConfig,
     BacktestEngineConfig,
@@ -40,8 +55,9 @@ if __name__ == "__main__":
     )
 
     # Data configuration pointing to bundled test data
+    data_path = Path(__file__).resolve().parents[2] / "tests" / "test_data" / "binance"
     data_cfg = BacktestDataConfig(
-        catalog_path="tests/test_data/binance",
+        catalog_path=str(data_path),
         data_cls="nautilus_trader.model.data:TradeTick",
         instrument_id="BTCUSDT.BINANCE",
     )
